@@ -44,7 +44,7 @@ def forward_propogate_arm(
     return path
 
 
-def visualize_arm_path(path: List[Tuple[int]]):
+def visualize_arm_path(path: List[Tuple[int]], name="component3.gif"):
     figure, axes = plt.subplots()
     axes.set_xlim([-5, 5])
     axes.set_ylim([-1, 5])
@@ -90,15 +90,33 @@ def visualize_arm_path(path: List[Tuple[int]]):
         figure, update, frames=len(path), interval=50, blit=True
     )
 
-    ani.save("component3.gif", writer=PillowWriter(fps=10))
+    ani.save(name, writer=PillowWriter(fps=10))
 
 
 if __name__ == "__main__":
 
-    print(interpolate_arm((0, 0), (np.pi, 0)))
-
-    print(forward_propogate_arm((0, 0), [(-1.7, -1.8, 2)]))
-
     visualize_arm_path(
-        interpolate_arm((np.pi / 2, np.pi * 1.5), (np.pi * (2 / 3), 1.5 * np.pi))
+        interpolate_arm((np.pi / 2, np.pi * 1.5), (np.pi * (2 / 3), 1.5 * np.pi)),
+        name="interpolate_arm_1.gif"
     )
+    
+    visualize_arm_path(
+        interpolate_arm((np.pi / 2, np.pi * 1), (np.pi * (1 / 3), 1.5 * np.pi)),
+        name="interpolate_arm_2.gif"
+    )
+    
+    visualize_arm_path(
+        interpolate_arm((np.pi / 2, np.pi * 1), (np.pi * (1 / 3), 1.5 * np.pi)),
+        name="interpolate_arm_3.gif"
+    )
+    
+    visualize_arm_path(
+        forward_propogate_arm((0, 0), [(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1),(0.4, 2, 0.1), (0.3, 1, .2),(0.3, 1, .2),(0.3, 1, .2),(0.3, -1, .2),(-0.3, -1, .2),(-0.3, -1, .2),(-0.3, -1, .2),(-0.3, 1, .2),(-0.3, 1, .2),(-0.3, 1, .2), (5, 0, 0.1)]),
+        name="forward_propogate_arm_1.gif"
+    )
+    
+    visualize_arm_path(
+        forward_propogate_arm((0, 0), [(0.4, 2, .2),(0.4, 2, .2),(0.4, 2, .2),(0.4, 2, .2),(0.4, 2, .2),(0.4, 2, .2),(0.4, 2, .2),(0.4, 2, .2),(0.4, 2, .2),(0.4, 2, .2), (0.1, 0.4, .4),(0.1, 0.4, .4),(0.1, 0.4, .4),(0.1, 0.4, .4),(0.1, 0.4, .4),(0.1, 0.4, .4),(0.1, 0.4, .4),(0.1, 0.4, .4),(0.1, 0.4, .4),(0.1, 0.4, .4), (2, 0, 0.1)]),
+        name="forward_propogate_arm_2.gif"
+    )
+
