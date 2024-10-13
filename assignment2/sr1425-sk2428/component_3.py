@@ -5,9 +5,6 @@ import json
 from matplotlib.animation import PillowWriter
 import matplotlib.animation as animation
 
-
-<<<<<<< Updated upstream
-=======
 def generate_arm():
     link1_w = 0.04
     link1_l = 2
@@ -84,7 +81,6 @@ def generate_arm():
     ]
 
 
->>>>>>> Stashed changes
 def generate_robot_freebody():
     w = 0.5
     h = 0.3
@@ -122,15 +118,6 @@ def generate_robot_freebody():
 
     rot_corners += np.array([x, y])
 
-<<<<<<< Updated upstream
-    return {
-        "center": (x, y),
-        "width": w,
-        "height": h,
-        "theta": theta,
-        "corners": rot_corners.tolist(),
-    }
-=======
     return [
         {
             "center": (x, y),
@@ -140,7 +127,6 @@ def generate_robot_freebody():
             "corners": rot_corners.tolist(),
         }
     ]
->>>>>>> Stashed changes
 
 
 # we are going to use seprability by axis theorem
@@ -178,28 +164,15 @@ def check_collision(corners1, corners2):
             maxB = np.max([projection, maxB])
 
         if maxA < minB or maxB < minA:
-<<<<<<< Updated upstream
-            return False 
-
-    return True 
-=======
             return False
 
     return True
->>>>>>> Stashed changes
 
 
 def check_collision_environment(environment, robot):
     for obstacle in environment["obstacles"]:
-<<<<<<< Updated upstream
-        obstacle["collision"] = check_collision(obstacle["corners"], robot["corners"])
-
-
-def visualize_scene(environment, filename=None):
-=======
         for box in robot:
             obstacle["collision"] = check_collision(obstacle["corners"], box["corners"])
-
             if obstacle["collision"]:
                 break
 
@@ -214,23 +187,11 @@ def visualize_scene(environment, robot_type="freebody", filename=None):
     else:
         raise ValueError("robot_type must be either 'freebody' or 'arm'")
 
->>>>>>> Stashed changes
     fig, ax = plt.subplots()
 
     ax.set_xlim(0, environment["dimensions"][0])
     ax.set_ylim(0, environment["dimensions"][1])
 
-<<<<<<< Updated upstream
-    robot = generate_robot_freebody()
-    corners = robot["corners"]
-    robot_patch = Polygon(
-        corners, closed=True, edgecolor="red", facecolor="green", alpha=0.6
-    )
-    ax.add_patch(robot_patch)
-
-    x, y = robot["center"]
-    ax.plot(x, y, "ro")
-=======
     robot_patches = []
     robot = generate_robot()
 
@@ -243,7 +204,6 @@ def visualize_scene(environment, robot_type="freebody", filename=None):
 
         x, y = box["center"]
         ax.plot(x, y, "ro", markersize=2)
->>>>>>> Stashed changes
 
     check_collision_environment(environment, robot)
 
@@ -262,26 +222,12 @@ def visualize_scene(environment, robot_type="freebody", filename=None):
         ax.add_patch(obstacle["polygon"])
 
         x, y = obstacle["center"]
-<<<<<<< Updated upstream
-        ax.plot(x, y, "ro")
-
-=======
         ax.plot(x, y, "ro", markersize=2)
     
->>>>>>> Stashed changes
     def update(num):
         # skip fram 0
         if num == 0:
             return []
-<<<<<<< Updated upstream
-
-        # skip frame if num is even
-        if num % 2 == 0:
-            return []
-
-        robot = generate_robot_freebody()
-        robot_patch.set_xy(robot["corners"])
-=======
         
         nonlocal robot
 
@@ -295,7 +241,6 @@ def visualize_scene(environment, robot_type="freebody", filename=None):
             patch.set_xy(box["corners"])
             x, y = box["center"]
             ax.plot(x, y, "ro", markersize=2)
->>>>>>> Stashed changes
 
         check_collision_environment(environment, robot)
 
@@ -310,21 +255,13 @@ def visualize_scene(environment, robot_type="freebody", filename=None):
                 obstacle["polygon"].set_facecolor("cyan")
             obstacles.append(obstacle["polygon"])
 
-<<<<<<< Updated upstream
-        return [robot_patch, *obstacles]
-=======
         return [*robot_patches, *obstacles]
->>>>>>> Stashed changes
 
     ax.set_aspect("equal")
     plt.grid(True)
     plt.title(f"Environment with {len(environment['obstacles'])} Obstacles")
 
-<<<<<<< Updated upstream
-    ani = animation.FuncAnimation(fig, update, frames=100, blit=True)
-=======
     ani = animation.FuncAnimation(fig, update, frames=10, blit=True)
->>>>>>> Stashed changes
 
     ani.save("test.gif", writer=PillowWriter(fps=1))
 
@@ -335,13 +272,7 @@ def scene_from_file(filename: str):
     file.close()
     return environment
 
-<<<<<<< Updated upstream
-if __name__ == "__main__":
-    environment = scene_from_file("environments/100_obstacles_env.json")
-    visualize_scene(environment)
-=======
 
 if __name__ == "__main__":
     environment = scene_from_file("environments/100_obstacles_env.json")
     visualize_scene(environment, robot_type="arm")
->>>>>>> Stashed changes
