@@ -47,6 +47,11 @@ def get_k_nearest_neighbors_arm(k, configs, origin):
     distances.sort(key=lambda x: x[0])
     return get_configurations_from_tuple(distances)[:k]
 
+def get_k_nearest_neighbors(robot, k, configs, origin):
+    if robot == 'arm':
+        return get_k_nearest_neighbors_arm(k, configs, origin)
+    else:
+        return get_k_nearest_neighbors_freebody(k, configs,origin)
 
 def get_configurations(file_name, N):
     configs = []
@@ -164,6 +169,11 @@ def visualize_robot_neighbors(target, configs, name="visualize.png"):
     plt.savefig(name)
     plt.close()
 
+def visualize(robot, target, nearest_neighbors, filename):
+    if robot == 'arm':
+        visualize_arm_neighbors(target, nearest_neighbors, filename)
+    else:
+        visualize_robot_neighbors(target, nearest_neighbors, filename)
 
 if __name__ == "__main__":
 
@@ -177,15 +187,6 @@ if __name__ == "__main__":
 
     configs = get_configurations(args.configs, args.target)
 
-    if args.robot == "arm":
+    nearest_neighbors = get_k_nearest_neighbors(args.robot, args.k, configs, args.target)
 
-        nearest_neighbors = get_k_nearest_neighbors_arm(args.k, configs, args.target)
-
-        visualize_arm_neighbors(args.target, nearest_neighbors, "visualize.png")
-    else:
-
-        nearest_neighbors = get_k_nearest_neighbors_freebody(
-            args.k, configs, args.target
-        )
-
-        visualize_robot_neighbors(args.target, nearest_neighbors, "visualize.png")
+    visualize_arm_neighbors(args.target, nearest_neighbors, "visualize.png")
