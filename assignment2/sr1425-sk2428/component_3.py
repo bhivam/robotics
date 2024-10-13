@@ -202,8 +202,6 @@ def visualize_scene(environment, robot_type="freebody", filename=None):
         )
         ax.add_patch(robot_patches[-1])
 
-        x, y = box["center"]
-        ax.plot(x, y, "ro", markersize=2)
 
     check_collision_environment(environment, robot)
 
@@ -221,26 +219,15 @@ def visualize_scene(environment, robot_type="freebody", filename=None):
 
         ax.add_patch(obstacle["polygon"])
 
-        x, y = obstacle["center"]
-        ax.plot(x, y, "ro", markersize=2)
     
     def update(num):
         # skip fram 0
         if num == 0:
             return []
         
-        nonlocal robot
-
-        for box in robot:
-            x, y = box["center"]
-            ax.plot(x, y, marker=None)
-
-
         robot = generate_robot()
         for patch, box in zip(robot_patches, robot):
             patch.set_xy(box["corners"])
-            x, y = box["center"]
-            ax.plot(x, y, "ro", markersize=2)
 
         check_collision_environment(environment, robot)
 
@@ -275,4 +262,4 @@ def scene_from_file(filename: str):
 
 if __name__ == "__main__":
     environment = scene_from_file("environments/100_obstacles_env.json")
-    visualize_scene(environment, robot_type="arm")
+    visualize_scene(environment, robot_type="freebody")
