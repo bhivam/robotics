@@ -10,10 +10,15 @@ def get_configurations_from_tuple(distances):
 def get_k_nearest_neighbors_freebody(k, configs, origin):
     distances = []
     for config in configs:
-        distance = np.linalg.norm(np.array(config) - np.array(origin))
+        distance = get_difference_freebody(config, origin)
         distances.append((distance, config))
     distances.sort(key=lambda x: x[0])
     return get_configurations_from_tuple(distances)[:k]
+
+def get_difference_freebody(config, origin):
+    pos_dist = np.linalg.norm(np.array(config[:2]) - np.array(origin[:2]))
+    angle_diff = min(abs(config[2] - origin[2]), 2*np.pi - abs(config[2] - origin[2]))
+    return pos_dist + angle_diff
 
 def get_xy_arm_coordinates(config):
     angle_1, angle_2 = config
