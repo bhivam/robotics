@@ -6,6 +6,8 @@ from matplotlib.patches import Polygon as MplPolygon, Circle # type: ignore
 import heapq
 import matplotlib.animation as animation # type: ignore
 from matplotlib.animation import  FFMpegWriter # type: ignore
+import math
+from datetime import datetime
 
 def load_map(filename):
     file = open(filename, "r")
@@ -38,17 +40,20 @@ def get_distance(robot, origin, config):
         return pos_dist + angle_diff
 
 
-def get_k_nearest_neighbors(robot, configs, origin):
+def get_k_nearest_neighbors(robot, configs, origin, k):
     
     def get_configurations_from_tuple(distances):
         return [distance[1] for distance in distances]
+    
+    if k == 0:
+        return []
 
     distances = []
     for config in configs:
         distance = get_distance(robot, origin, config)
         distances.append((distance, config))
     distances.sort(key=lambda x: x[0])
-    return get_configurations_from_tuple(distances)[:6]
+    return get_configurations_from_tuple(distances)[:k]
     
 
 def random_config(robot_type):
@@ -126,6 +131,7 @@ def configurations_intersect_obstacles(config, robot_type, obstacles):
                 "corners": link2_rot_corners.tolist(),
             },
         ]
+
 
     def generate_robot_freebody(config):
         w = 0.5
@@ -248,7 +254,7 @@ def path_collision_check(node, next_node, obstacles):
         o2 = orientation(p1, q1, q2)
         o3 = orientation(p2, q2, p1)
         o4 = orientation(p2, q2, q1)
-        
+
         if o1 != o2 and o3 != o4:
             return True
 
@@ -276,9 +282,8 @@ def path_collision_check(node, next_node, obstacles):
                 return True
     
     return False
-    
-
-def prm(start, goal, robot_type, obstacles, num_samples=5000):
+        
+def prm_star(start, goal, robot_type, obstacles, num_samples=5000):
     graph = {}
     nodes = [tuple(start), tuple(goal)]
 
@@ -290,8 +295,17 @@ def prm(start, goal, robot_type, obstacles, num_samples=5000):
         if not configurations_intersect_obstacles(config, robot_type, obstacles):
             nodes.append(tuple(config))
 
-    for node in nodes:
-        neighbors = get_k_nearest_neighbors(robot_type, nodes, node)
+    if robot_type == 'arm':
+        dim = 2
+    else:
+        dim = 3
+
+    k_prm = np.exp(1+1/dim)
+
+    for n in range(len(nodes)):
+        node = nodes[n]
+        k = math.ceil(k_prm*np.log(n+1))
+        neighbors = get_k_nearest_neighbors(robot_type, nodes, node, k)
         for neighbor in neighbors:
             if not path_collision_check(node, neighbor, obstacles):
                 add_edges(graph, tuple(node), [neighbor])
@@ -338,7 +352,7 @@ def dijkstra_search(robot, start, goal, graph):
                 heapq.heappush(priority_queue, (tentative_g_score, neighbor))
     return None
 
-def visualize_prm(graph, obstacles, start, goal):
+def visualize_prm(graph, obstacles, start, goal, path=None, dimensions=None, robot_type="freeBody"):
     _, axes = plt.subplots(figsize=(8, 8))
 
     onstacles_corners = []
@@ -379,7 +393,7 @@ def visualize_prm(graph, obstacles, start, goal):
     plt.close()
 
 
-def visualize_path(path, obstacles, start, goal, robot):
+def visualize_path(path, obstacles, start, goal, robot, name="visualize.mp4"):
 
     def visualize_path_freebody(path, obstacles, start, goal, name="visualize.mp4"):
         figure, axes = plt.subplots()
@@ -398,12 +412,12 @@ def visualize_path(path, obstacles, start, goal, robot):
         axes.set_xlim([0, 20])
         axes.set_ylim([0, 20])
 
-        plt.scatter([start[0], goal[0]], [start[1], goal[1]], [200,200],marker="D", zorder=2, c="blue")
+        plt.scatter([start[0], goal[0]], [start[1], goal[1]], [200,200],marker="D", zorder=3, c="blue")
 
         for i in range(len(path)-1):
             prev = path[i]
             next = path[i+1]
-            plt.plot([prev[0], next[0]], [prev[1], next[1]], c ="red", zorder=3)
+            plt.plot([prev[0], next[0]], [prev[1], next[1]], c ="red", zorder=2)
     
         length, width = (0.5, 0.3)
     
@@ -506,10 +520,10 @@ if __name__ == "__main__":
 
     obstacles, dimensions = load_map(args.map)
 
-    graph = prm(args.start, args.goal, args.robot, obstacles)
+    graph = prm_star(args.start, args.goal, args.robot, obstacles)
 
     path = dijkstra_search(args.robot, args.start, args.goal, graph)
 
-    visualize_prm(graph, obstacles, args.start, args.goal)
+    visualize_prm(graph, obstacles, args.start, args.goal, args.robot)
 
     visualize_path(path, obstacles, args.start, args.goal, args.robot)
