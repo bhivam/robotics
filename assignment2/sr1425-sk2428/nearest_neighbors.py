@@ -5,22 +5,18 @@ import matplotlib.animation as animation  # type: ignore
 from matplotlib.animation import PillowWriter  # type: ignore
 
 
-def get_configurations_from_tuple(distances):
-    return [distance[1] for distance in distances]
+def get_distance(robot, origin, config):
+    if robot == 'arm':
+        xy_coordinates = get_xy_arm_coordinates(origin)
+        xy_config_coordinates = get_xy_arm_coordinates(config)
+        return np.linalg.norm(
+            np.array(xy_config_coordinates) - np.array(xy_coordinates)
+        )
+    else:
+        pos_dist = np.linalg.norm(np.array(config[:2]) - np.array(origin[:2]))
+        angle_diff = min(abs(config[2] - origin[2]), 2*np.pi - abs(config[2] - origin[2]))
+        return pos_dist + angle_diff
 
-
-def get_k_nearest_neighbors_freebody(k, configs, origin):
-    distances = []
-    for config in configs:
-        distance = get_difference_freebody(config, origin)
-        distances.append((distance, config))
-    distances.sort(key=lambda x: x[0])
-    return get_configurations_from_tuple(distances)[:k]
-
-def get_difference_freebody(config, origin):
-    pos_dist = np.linalg.norm(np.array(config[:2]) - np.array(origin[:2]))
-    angle_diff = min(abs(config[2] - origin[2]), 2*np.pi - abs(config[2] - origin[2]))
-    return pos_dist + angle_diff
 
 def get_xy_arm_coordinates(config):
     angle_1, angle_2 = config
@@ -34,26 +30,18 @@ def get_xy_arm_coordinates(config):
         2 * np.sin(angle_1) + (width / 2) * np.sin(angle_2),
     ]
 
+def get_k_nearest_neighbors(robot, k, configs, origin):
+    def get_configurations_from_tuple(distances):
+        return [distance[1] for distance in distances]
 
-def get_k_nearest_neighbors_arm(k, configs, origin):
     distances = []
-    xy_coordinates = get_xy_arm_coordinates(origin)
     for config in configs:
-        xy_config_coordinates = get_xy_arm_coordinates(config)
-        distance = np.linalg.norm(
-            np.array(xy_config_coordinates) - np.array(xy_coordinates)
-        )
+        distance = get_distance(robot, origin, config)
         distances.append((distance, config))
     distances.sort(key=lambda x: x[0])
     return get_configurations_from_tuple(distances)[:k]
 
-def get_k_nearest_neighbors(robot, k, configs, origin):
-    if robot == 'arm':
-        return get_k_nearest_neighbors_arm(k, configs, origin)
-    else:
-        return get_k_nearest_neighbors_freebody(k, configs,origin)
-
-def get_configurations(file_name, N):
+def get_configurations(file_name):
     configs = []
     with open(file_name, "r") as file:
         for line in file:
@@ -185,7 +173,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    configs = get_configurations(args.configs, args.target)
+    configs = get_configurations(args.configs)
 
     nearest_neighbors = get_k_nearest_neighbors(args.robot, args.k, configs, args.target)
 
