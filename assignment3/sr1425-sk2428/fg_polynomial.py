@@ -1,6 +1,7 @@
 from functools import partial
-import numpy as np
-import gtsam
+import numpy as np # type: ignore
+import matplotlib.pyplot as plt # type: ignore
+import gtsam # type: ignore
 from typing import List, Optional
 import argparse
 
@@ -46,10 +47,27 @@ def error_func(y: np.ndarray, x: np.ndarray, this: gtsam.CustomFactor, v:
         H[3] = np.array([[1]])     # derr / dd
     return np.array([error])
 
+def plot_result(X, G, Z, R):
+    # Create a figure and a set of subplots
+    plt.plot(X, G, color='r', label='Ground Truth')
+    plt.plot(X, Z, color='g', label='Noisy Data')
+    plt.plot(X, R, color='b', label='Estimated Polynomial')
+
+    # Naming the x-axis, y-axis and the whole graph
+    plt.xlabel("x")
+    plt.ylabel("y")
+
+    # Adding legend, which helps us recognize the curve according to it's color
+    plt.legend()
+
+    # To load the display window
+    plt.savefig("result.png")
+
 if __name__ == "__main__":
     graph = gtsam.NonlinearFactorGraph()
     v = gtsam.Values()
     T = 100
+    x = np.linspace(-10,10,T)
     GT = [] # The ground truth, for comparison
     Z = [] # GT + Normal(0, Sigma)
     # The initial guess values
@@ -70,11 +88,11 @@ if __name__ == "__main__":
     v.insert(kc, c)
     v.insert(kd, d)
     # Create the \Sigma (a n x n matrix, here n=1)
-    sigma = 1
+    sigma = 10
     noise_model = gtsam.noiseModel.Isotropic.Sigma(1, sigma)
     for i in range(T):
-        GT.append(f(i))
-        Z.append(f(i) + np.random.normal(0.0, sigma)) # Produce the noisy data
+        GT.append(f(x[i]))
+        Z.append(f(x[i]) + np.random.normal(0.0, sigma)) # Produce the noisy data
         # This are the keys associate to each factor.
         # Notice that for this simple example, the keys do not depend on T, but this may not always be the case
         keys = gtsam.KeyVector([ka, kb, kc, kd])
@@ -86,7 +104,7 @@ if __name__ == "__main__":
         # F(this: gtsam.CustomFactor, v: gtsam.Values, H: List[np.ndarray])
         # Because our function has more parameters (z and i), we need to *fix* this
         # which can be done via partial.
-        gf = gtsam.CustomFactor(noise_model, keys, partial(error_func, np.array([Z[i]]), np.array([i]) ))
+        gf = gtsam.CustomFactor(noise_model, keys, partial(error_func, np.array([Z[i]]), np.array([x[i]]) ))
         # add the factor to the graph.
         graph.add(gf)
     # Construct the optimizer and call with default parameters
@@ -105,3 +123,10 @@ if __name__ == "__main__":
     # Should be further tested that the resulting m, b actually fit the data
     for i in range(T):
         print(i, GT[i], Z[i])
+
+    R = []
+
+    for i in range(T):
+        R.append(f(x[i], a, b, c, d))
+
+    plot_result(x, GT, Z, R)
