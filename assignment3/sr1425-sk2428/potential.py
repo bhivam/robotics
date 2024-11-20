@@ -12,12 +12,6 @@ MAX_DISTANCE = 7.0
 REPULSIVE_COEFF = 8
 ATTRACTIVE_COEFF = 0.5
 
-def load_map(filename):
-    file = open(filename, "r")
-    environment = json.load(file)
-    file.close()
-    return environment["obstacles"]
-
 def attractive_gradient(config, goal):
     return 2 * ATTRACTIVE_COEFF * (config - goal)
 
@@ -31,6 +25,13 @@ def repulsive_gradient(config, obstacles):
 
 def potential_gradient(config, goal, obstacles):
     return attractive_gradient(config, goal) + repulsive_gradient(config, obstacles)
+
+
+def load_map(filename):
+    file = open(filename, "r")
+    environment = json.load(file)
+    file.close()
+    return environment["obstacles"]
 
 def configurations_intersect_obstacles(config, obstacles):
         

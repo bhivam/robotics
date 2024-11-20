@@ -1,0 +1,208 @@
+digraph {
+	rankdir=LR
+	x0 [label=x0 color=blue shape=circle]
+	x1 [label=x1 color=blue shape=circle]
+	x2 [label=x2 color=blue shape=circle]
+	x3 [label=x3 color=blue shape=circle]
+	x4 [label=x4 color=blue shape=circle]
+	x5 [label=x5 color=blue shape=circle]
+	x6 [label=x6 color=blue shape=circle]
+	x7 [label=x7 color=blue shape=circle]
+	x8 [label=x8 color=blue shape=circle]
+	x9 [label=x9 color=blue shape=circle]
+	x10 [label=x10 color=blue shape=circle]
+	x11 [label=x11 color=blue shape=circle]
+	x12 [label=x12 color=blue shape=circle]
+	x13 [label=x13 color=blue shape=circle]
+	x14 [label=x14 color=blue shape=circle]
+	x15 [label=x15 color=blue shape=circle]
+	x16 [label=x16 color=blue shape=circle]
+	x17 [label=x17 color=blue shape=circle]
+	x18 [label=x18 color=blue shape=circle]
+	x19 [label=x19 color=blue shape=circle]
+	x20 [label=x20 color=blue shape=circle]
+	x21 [label=x21 color=blue shape=circle]
+	x22 [label=x22 color=blue shape=circle]
+	x23 [label=x23 color=blue shape=circle]
+	x24 [label=x24 color=blue shape=circle]
+	x25 [label=x25 color=blue shape=circle]
+	x26 [label=x26 color=blue shape=circle]
+	x27 [label=x27 color=blue shape=circle]
+	x28 [label=x28 color=blue shape=circle]
+	x29 [label=x29 color=blue shape=circle]
+	x30 [label=x30 color=blue shape=circle]
+	x31 [label=x31 color=blue shape=circle]
+	x32 [label=x32 color=blue shape=circle]
+	x33 [label=x33 color=blue shape=circle]
+	x34 [label=x34 color=blue shape=circle]
+	x35 [label=x35 color=blue shape=circle]
+	x36 [label=x36 color=blue shape=circle]
+	x37 [label=x37 color=blue shape=circle]
+	x38 [label=x38 color=blue shape=circle]
+	x39 [label=x39 color=blue shape=circle]
+	x40 [label=x40 color=blue shape=circle]
+	x41 [label=x41 color=blue shape=circle]
+	x42 [label=x42 color=blue shape=circle]
+	x43 [label=x43 color=blue shape=circle]
+	x44 [label=x44 color=blue shape=circle]
+	x45 [label=x45 color=blue shape=circle]
+	x46 [label=x46 color=blue shape=circle]
+	x47 [label=x47 color=blue shape=circle]
+	x48 [label=x48 color=blue shape=circle]
+	x49 [label=x49 color=blue shape=circle]
+	x50 [label=x50 color=blue shape=circle]
+	f0 [label="" color=red shape=square]
+	f0 -> x8646911284551352320
+	f1 [label="" color=red shape=square]
+	f1 -> x8646911284551352320
+	f1 -> x8646911284551352321
+	f2 [label="" color=red shape=square]
+	f2 -> x8646911284551352321
+	f2 -> x8646911284551352322
+	f3 [label="" color=red shape=square]
+	f3 -> x8646911284551352322
+	f3 -> x8646911284551352323
+	f4 [label="" color=red shape=square]
+	f4 -> x8646911284551352323
+	f4 -> x8646911284551352324
+	f5 [label="" color=red shape=square]
+	f5 -> x8646911284551352324
+	f5 -> x8646911284551352325
+	f6 [label="" color=red shape=square]
+	f6 -> x8646911284551352325
+	f6 -> x8646911284551352326
+	f7 [label="" color=red shape=square]
+	f7 -> x8646911284551352326
+	f7 -> x8646911284551352327
+	f8 [label="" color=red shape=square]
+	f8 -> x8646911284551352327
+	f8 -> x8646911284551352328
+	f9 [label="" color=red shape=square]
+	f9 -> x8646911284551352328
+	f9 -> x8646911284551352329
+	f10 [label="" color=red shape=square]
+	f10 -> x8646911284551352329
+	f10 -> x8646911284551352330
+	f11 [label="" color=red shape=square]
+	f11 -> x8646911284551352330
+	f11 -> x8646911284551352331
+	f12 [label="" color=red shape=square]
+	f12 -> x8646911284551352331
+	f12 -> x8646911284551352332
+	f13 [label="" color=red shape=square]
+	f13 -> x8646911284551352332
+	f13 -> x8646911284551352333
+	f14 [label="" color=red shape=square]
+	f14 -> x8646911284551352333
+	f14 -> x8646911284551352334
+	f15 [label="" color=red shape=square]
+	f15 -> x8646911284551352334
+	f15 -> x8646911284551352335
+	f16 [label="" color=red shape=square]
+	f16 -> x8646911284551352335
+	f16 -> x8646911284551352336
+	f17 [label="" color=red shape=square]
+	f17 -> x8646911284551352336
+	f17 -> x8646911284551352337
+	f18 [label="" color=red shape=square]
+	f18 -> x8646911284551352337
+	f18 -> x8646911284551352338
+	f19 [label="" color=red shape=square]
+	f19 -> x8646911284551352338
+	f19 -> x8646911284551352339
+	f20 [label="" color=red shape=square]
+	f20 -> x8646911284551352339
+	f20 -> x8646911284551352340
+	f21 [label="" color=red shape=square]
+	f21 -> x8646911284551352340
+	f21 -> x8646911284551352341
+	f22 [label="" color=red shape=square]
+	f22 -> x8646911284551352341
+	f22 -> x8646911284551352342
+	f23 [label="" color=red shape=square]
+	f23 -> x8646911284551352342
+	f23 -> x8646911284551352343
+	f24 [label="" color=red shape=square]
+	f24 -> x8646911284551352343
+	f24 -> x8646911284551352344
+	f25 [label="" color=red shape=square]
+	f25 -> x8646911284551352344
+	f25 -> x8646911284551352345
+	f26 [label="" color=red shape=square]
+	f26 -> x8646911284551352345
+	f26 -> x8646911284551352346
+	f27 [label="" color=red shape=square]
+	f27 -> x8646911284551352346
+	f27 -> x8646911284551352347
+	f28 [label="" color=red shape=square]
+	f28 -> x8646911284551352347
+	f28 -> x8646911284551352348
+	f29 [label="" color=red shape=square]
+	f29 -> x8646911284551352348
+	f29 -> x8646911284551352349
+	f30 [label="" color=red shape=square]
+	f30 -> x8646911284551352349
+	f30 -> x8646911284551352350
+	f31 [label="" color=red shape=square]
+	f31 -> x8646911284551352350
+	f31 -> x8646911284551352351
+	f32 [label="" color=red shape=square]
+	f32 -> x8646911284551352351
+	f32 -> x8646911284551352352
+	f33 [label="" color=red shape=square]
+	f33 -> x8646911284551352352
+	f33 -> x8646911284551352353
+	f34 [label="" color=red shape=square]
+	f34 -> x8646911284551352353
+	f34 -> x8646911284551352354
+	f35 [label="" color=red shape=square]
+	f35 -> x8646911284551352354
+	f35 -> x8646911284551352355
+	f36 [label="" color=red shape=square]
+	f36 -> x8646911284551352355
+	f36 -> x8646911284551352356
+	f37 [label="" color=red shape=square]
+	f37 -> x8646911284551352356
+	f37 -> x8646911284551352357
+	f38 [label="" color=red shape=square]
+	f38 -> x8646911284551352357
+	f38 -> x8646911284551352358
+	f39 [label="" color=red shape=square]
+	f39 -> x8646911284551352358
+	f39 -> x8646911284551352359
+	f40 [label="" color=red shape=square]
+	f40 -> x8646911284551352359
+	f40 -> x8646911284551352360
+	f41 [label="" color=red shape=square]
+	f41 -> x8646911284551352360
+	f41 -> x8646911284551352361
+	f42 [label="" color=red shape=square]
+	f42 -> x8646911284551352361
+	f42 -> x8646911284551352362
+	f43 [label="" color=red shape=square]
+	f43 -> x8646911284551352362
+	f43 -> x8646911284551352363
+	f44 [label="" color=red shape=square]
+	f44 -> x8646911284551352363
+	f44 -> x8646911284551352364
+	f45 [label="" color=red shape=square]
+	f45 -> x8646911284551352364
+	f45 -> x8646911284551352365
+	f46 [label="" color=red shape=square]
+	f46 -> x8646911284551352365
+	f46 -> x8646911284551352366
+	f47 [label="" color=red shape=square]
+	f47 -> x8646911284551352366
+	f47 -> x8646911284551352367
+	f48 [label="" color=red shape=square]
+	f48 -> x8646911284551352367
+	f48 -> x8646911284551352368
+	f49 [label="" color=red shape=square]
+	f49 -> x8646911284551352368
+	f49 -> x8646911284551352369
+	f50 [label="" color=red shape=square]
+	f50 -> x8646911284551352369
+	f50 -> x8646911284551352370
+	f51 [label="" color=red shape=square]
+	f51 -> x8646911284551352370
+}
