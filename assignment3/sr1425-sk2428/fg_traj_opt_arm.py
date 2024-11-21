@@ -1,19 +1,10 @@
-import numpy as np
-import gtsam
-import matplotlib.pyplot as plt
+import numpy as np # type: ignore
+import gtsam # type: ignore
+import matplotlib.pyplot as plt # type: ignore
 import argparse
 
 
 def trajectory_2link_arm(start, goal, T, dt=0.1):
-    """
-    Constructs a factor graph for trajectory optimization for a 2-link arm.
-
-    :param start: Start state (θ1, θ2) as a tuple.
-    :param goal: Goal state (θ1, θ2) as a tuple.
-    :param T: Total number of time steps.
-    :param dt: Time step duration.
-    :return: Optimized trajectory.
-    """
     graph = gtsam.NonlinearFactorGraph()
     values = gtsam.Values()
 
@@ -54,12 +45,6 @@ def trajectory_2link_arm(start, goal, T, dt=0.1):
 
 
 def visualize_trajectory(trajectory, start, goal, link_length=1.0):
-    """
-    Visualizes the 2-link robot arm trajectory, displaying the entire arm for each step.
-
-    :param trajectory: List of joint angle pairs [(θ1, θ2), ...].
-    :param link_length: Length of each link in the robot arm.
-    """
     plt.figure(figsize=(10, 8))
     plt.title("2-Link Robot Arm Trajectory")
     plt.xlabel("X")
@@ -85,16 +70,10 @@ def visualize_trajectory(trajectory, start, goal, link_length=1.0):
 
 if __name__ == "__main__":
     
-    parser = argparse.ArgumentParser(
-        description="Trajectory Optimization for 2-Link Robot Arm"
-    )
-    parser.add_argument(
-        "--start", type=float, nargs=2, required=True, help="Start state (θ1, θ2)"
-    )
-    parser.add_argument(
-        "--goal", type=float, nargs=2, required=True, help="Goal state (θ1, θ2)"
-    )
-    parser.add_argument("--T", type=int, required=True, help="Number of time steps")
+    parser = argparse.ArgumentParser(description="Trajectory Optimization for 2-Link Robot Arm")
+    parser.add_argument("--start", type=float, nargs=2, required=True)
+    parser.add_argument("--goal", type=float, nargs=2, required=True)
+    parser.add_argument("--T", type=int, required=True)
     args = parser.parse_args()
 
     

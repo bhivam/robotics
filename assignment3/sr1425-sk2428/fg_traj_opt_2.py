@@ -1,20 +1,10 @@
-import numpy as np
-import gtsam
-import matplotlib.pyplot as plt
+import numpy as np # type: ignore
+import gtsam # type: ignore
+import matplotlib.pyplot as plt # type: ignore
 import argparse
 
 
-def trajectory_with_intermediate_states(start, goal, T, intermediate_states, dt=0.1):
-    """
-    Constructs a factor graph for trajectory optimization with intermediate states.
-
-    :param start: Start state (x, y) as a tuple.
-    :param goal: Goal state (x, y) as a tuple.
-    :param T: Total number of time steps.
-    :param intermediate_states: List of intermediate states [(x1, y1), (x2, y2), ...].
-    :param dt: Time step duration.
-    :return: Optimized trajectory.
-    """
+def trajectory_with_intermediate_states(start, goal, T, intermediate_states):
     graph = gtsam.NonlinearFactorGraph()
     values = gtsam.Values()
 
@@ -69,9 +59,7 @@ def trajectory_with_intermediate_states(start, goal, T, intermediate_states, dt=
 
 
 def visualize_trajectory(trajectory, start, goal, intermediate_states):
-    """
-    Visualizes the trajectory with intermediate states.
-    """
+
     trajectory = np.array(trajectory)
     plt.figure()
     plt.plot(trajectory[:, 0], trajectory[:, 1], "-o", label="Optimized Trajectory")
@@ -99,30 +87,12 @@ def visualize_trajectory(trajectory, start, goal, intermediate_states):
 
 if __name__ == "__main__":
     
-    parser = argparse.ArgumentParser(
-        description="Trajectory Optimization with Intermediate States"
-    )
-    parser.add_argument(
-        "--start", type=float, nargs=2, required=True, help="Start state (x, y)"
-    )
-    parser.add_argument(
-        "--goal", type=float, nargs=2, required=True, help="Goal state (x, y)"
-    )
-    parser.add_argument("--T", type=int, required=True, help="Number of time steps")
-    parser.add_argument(
-        "--x0",
-        type=float,
-        nargs=2,
-        help="First intermediate state (x, y)",
-        required=False,
-    )
-    parser.add_argument(
-        "--x1",
-        type=float,
-        nargs=2,
-        help="Second intermediate state (x, y)",
-        required=False,
-    )
+    parser = argparse.ArgumentParser(description="Trajectory Optimization with Intermediate States")
+    parser.add_argument("--start", type=float, nargs=2, required=True)
+    parser.add_argument("--goal", type=float, nargs=2, required=True)
+    parser.add_argument("--T", type=int, required=True)
+    parser.add_argument("--x0", type=float, nargs=2, required=False)
+    parser.add_argument("--x1", type=float, nargs=2, required=False)
     args = parser.parse_args()
 
     
@@ -133,9 +103,7 @@ if __name__ == "__main__":
         intermediate_states.append(tuple(args.x1))
 
     
-    trajectory = trajectory_with_intermediate_states(
-        tuple(args.start), tuple(args.goal), args.T, intermediate_states
-    )
+    trajectory = trajectory_with_intermediate_states(tuple(args.start), tuple(args.goal), args.T, intermediate_states)
 
     
     print("Optimized Trajectory:")
@@ -143,6 +111,4 @@ if __name__ == "__main__":
         print(f"t={t}: {state}")
 
    
-    visualize_trajectory(
-        trajectory, tuple(args.start), tuple(args.goal), intermediate_states
-    )
+    visualize_trajectory(trajectory, tuple(args.start), tuple(args.goal), intermediate_states)
