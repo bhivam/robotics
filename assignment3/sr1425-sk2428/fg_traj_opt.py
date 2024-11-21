@@ -1,19 +1,10 @@
-import numpy as np
-import gtsam
-import matplotlib.pyplot as plt
+import numpy as np # type: ignore
+import gtsam # type: ignore
+import matplotlib.pyplot as plt # type: ignore
 import argparse
 
 
 def trajectory_factor_graph(start, goal, T, dt=0.1):
-    """
-    Constructs a factor graph for basic trajectory optimization of a point system.
-
-    :param start: Start state (x, y) as a tuple.
-    :param goal: Goal state (x, y) as a tuple.
-    :param T: Total number of time steps.
-    :param dt: Time step duration.
-    :return: Optimized trajectory, factor graph.
-    """
     graph = gtsam.NonlinearFactorGraph()
     values = gtsam.Values()
 
@@ -48,9 +39,7 @@ def trajectory_factor_graph(start, goal, T, dt=0.1):
 
 
 def visualize_trajectory(trajectory, start, goal):
-    """
-    Visualizes the trajectory.
-    """
+
     trajectory = np.array(trajectory)
     plt.figure()
     plt.plot(trajectory[:, 0], trajectory[:, 1], '-o', label='Optimized Trajectory')
@@ -62,15 +51,15 @@ def visualize_trajectory(trajectory, start, goal):
     plt.legend()
     plt.grid()
     plt.axis('equal')
-    plt.show()
+    plt.savefig("result.png")
 
 
 if __name__ == "__main__":
     
-    parser = argparse.ArgumentParser(description="Basic Trajectory Optimization")
-    parser.add_argument("--start", type=float, nargs=2, required=True, help="Start state (x, y)")
-    parser.add_argument("--goal", type=float, nargs=2, required=True, help="Goal state (x, y)")
-    parser.add_argument("--T", type=int, required=True, help="Number of time steps")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--start", type=float, nargs=2, required=True)
+    parser.add_argument("--goal", type=float, nargs=2, required=True)
+    parser.add_argument("--T", type=int, required=True)
     args = parser.parse_args()
 
     
