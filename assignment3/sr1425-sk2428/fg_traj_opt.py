@@ -51,7 +51,8 @@ def visualize_trajectory(trajectory, start, goal):
     plt.legend()
     plt.grid()
     plt.axis('equal')
-    plt.savefig("result.png")
+
+    plt.savefig("trajectory.png")
 
 
 if __name__ == "__main__":

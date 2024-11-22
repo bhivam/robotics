@@ -82,7 +82,8 @@ def visualize_trajectory(trajectory, start, goal, intermediate_states):
     plt.legend()
     plt.grid()
     plt.axis("equal")
-    plt.show()
+
+    plt.savefig("trajectory2.png")
 
 
 if __name__ == "__main__":
